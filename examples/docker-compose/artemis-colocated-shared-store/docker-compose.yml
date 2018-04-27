@@ -1,0 +1,46 @@
+version: '3'
+services:
+  artemis-live:
+    image: vromero/activemq-artemis:2.4.0
+    ports:
+      - "8161:8161"
+      - "61617:61617"
+      - "1199:1199"
+      - "1198:1198"
+    environment:
+      ARTEMIS_USERNAME: admin
+      ARTEMIS_PASSWORD: admin
+      ARTEMIS_MIN_MEMORY: 256M
+      ARTEMIS_MAX_MEMORY: 1024M
+      ARTEMIS_PERF_JOURNAL: AUTO
+      ENABLE_JMX: 'true'
+      JMX_PORT: 1199
+      JMX_RMI_PORT: 1198
+      JAVA_TOOL_OPTIONS: "-Dlive.host=yeats.local -Dlive.port=61617 -Dbackup.host=yeats.local -Dbackup.port=61626"
+    volumes:
+      #- data:/var/lib/artemis/data
+      - /projects/artemis/broker1:/var/lib/artemis/etc-override
+
+  artemis-backup:
+    image: vromero/activemq-artemis:2.4.0
+    ports:
+      - "8171:8161"
+      - "61626:61616"
+      - "1209:1209"
+      - "1208:1209"
+    environment:
+      ARTEMIS_USERNAME: admin
+      ARTEMIS_PASSWORD: admin
+      ARTEMIS_MIN_MEMORY: 256M
+      ARTEMIS_MAX_MEMORY: 1024M
+      ARTEMIS_PERF_JOURNAL: AUTO
+      ENABLE_JMX: 'true'
+      JMX_PORT: 1209
+      JMX_RMI_PORT: 1209
+      JAVA_TOOL_OPTIONS: "-Dlive.host=yeats.local -Dlive.port=61617 -Dbackup.host=yeats.local -Dbackup.port=61626"
+    volumes:
+      #- data:/var/lib/artemis/data
+      - /projects/artemis/broker2:/var/lib/artemis/etc-override
+
+volumes:
+  data:
