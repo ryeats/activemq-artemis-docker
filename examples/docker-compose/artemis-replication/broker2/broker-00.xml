@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+
+<configuration xmlns="urn:activemq" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:activemq /schema/artemis-configuration.xsd">
+
+    <core xmlns="urn:activemq:core">
+
+    <acceptors>
+        <!-- Acceptor for every supported protocol -->
+        <acceptor name="artemis">tcp://0.0.0.0:61626?tcpSendBufferSize=1048576;tcpReceiveBufferSize=1048576;protocols=CORE,AMQP,STOMP,HORNETQ,MQTT,OPENWIRE;useEpoll=true;amqpCredits=1000;amqpLowCredits=300</acceptor>
+    </acceptors>
+		
+        <!-- Connectors -->
+        <connectors>
+           <connector name="netty-connector">tcp://yeats.local:61626</connector>
+           <!-- connector to the server0 -->
+           <connector name="server0-connector">tcp://yeats.local:61617</connector>
+        </connectors>
+
+        <cluster-connections>
+            <cluster-connection name="broker-cluster">
+                <address>jms</address>
+                <connector-ref>netty-connector</connector-ref>
+                <static-connectors>
+                    <connector-ref>server0-connector</connector-ref>
+                </static-connectors>
+            </cluster-connection>
+        </cluster-connections>
+
+
+        <ha-policy>
+            <replication>
+                <slave/>
+            </replication>
+        </ha-policy>
+		
+        <network-check-period>10000</network-check-period>
+        <network-check-timeout>255</network-check-timeout>
+
+        <!-- this is a comma separated list, no spaces, just DNS or IPs
+             it should accept IPV6
+
+             Warning: Make sure you understand your network topology as this is meant to validate if your network is valid.
+                      Using IPs that could eventually disappear or be partially visible may defeat the purpose.
+                      You can use a list of multiple IPs, and if any successful ping will make the server OK to continue running -->
+        <network-check-list>${iplist}</network-check-list>
+
+    </core>
+</configuration>

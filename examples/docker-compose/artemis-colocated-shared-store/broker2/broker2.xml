@@ -25,13 +25,13 @@
          -->
         <journal-type>ASYNCIO</journal-type>
 
-        <paging-directory>./data/paging</paging-directory>
+        <paging-directory>./data/data2/paging</paging-directory>
 
-        <bindings-directory>./data/bindings</bindings-directory>
+        <bindings-directory>./data/data2/bindings</bindings-directory>
 
-        <journal-directory>./data/journal</journal-directory>
+        <journal-directory>./data/data2/journal</journal-directory>
 
-        <large-messages-directory>./data/large-messages</large-messages-directory>
+        <large-messages-directory>./data/data2/large-messages</large-messages-directory>
 
         <journal-datasync>true</journal-datasync>
 

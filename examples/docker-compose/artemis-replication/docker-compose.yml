@@ -16,9 +16,8 @@ services:
       ENABLE_JMX: 'true'
       JMX_PORT: 1199
       JMX_RMI_PORT: 1198
-      JAVA_TOOL_OPTIONS: "-Dlive.host=yeats.local -Dlive.port=61617 -Dbackup.host=yeats.local -Dbackup.port=61626"
+      JAVA_TOOL_OPTIONS: "-Dlive.host=artemis-live -Dlive.port=61617 -Dbackup.host=artemis-backup -Dbackup.port=61626"
     volumes:
-      - data:/var/lib/artemis/data
       - ./broker1:/var/lib/artemis/etc-override
       #- ./broker1/etc:/var/lib/artemis/etc
 
@@ -26,7 +25,7 @@ services:
     image: vromero/activemq-artemis:2.4.0
     ports:
       - "8171:8161"
-      - "61626:61616"
+      - "61626:61626"
       - "1209:1209"
       - "1208:1209"
     environment:
@@ -38,11 +37,10 @@ services:
       ENABLE_JMX: 'true'
       JMX_PORT: 1209
       JMX_RMI_PORT: 1209
-      JAVA_TOOL_OPTIONS: "-Dlive.host=yeats.local -Dlive.port=61617 -Dbackup.host=yeats.local -Dbackup.port=61626"
+      JAVA_TOOL_OPTIONS: "-Dlive.host=artemis-live -Dlive.port=61617 -Dbackup.host=artemis-backup -Dbackup.port=61626"
     volumes:
-      - data:/var/lib/artemis/data
-      - ./broker2:/var/lib/artemis/etc-override
-      #- ./broker2/etc:/var/lib/artemis/etc
+      #- ./broker2:/var/lib/artemis/etc-override
+      - ./broker2/etc:/var/lib/artemis/etc
 
 volumes:
   data:

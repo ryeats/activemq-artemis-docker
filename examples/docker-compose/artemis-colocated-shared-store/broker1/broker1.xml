@@ -25,13 +25,13 @@
          -->
         <journal-type>ASYNCIO</journal-type>
 
-        <paging-directory>./data/paging</paging-directory>
+        <paging-directory>./data/data1/paging</paging-directory>
 
-        <bindings-directory>./data/bindings</bindings-directory>
+        <bindings-directory>./data/data1/bindings</bindings-directory>
 
-        <journal-directory>./data/journal</journal-directory>
+        <journal-directory>./data/data1/journal</journal-directory>
 
-        <large-messages-directory>./data/large-messages</large-messages-directory>
+        <large-messages-directory>./data/data1/large-messages</large-messages-directory>
 
         <journal-datasync>true</journal-datasync>
 
@@ -251,16 +251,13 @@
         </connectors>
 
         <cluster-connections>
-           <cluster-connection name="my-cluster">
-              <connector-ref>netty-connector</connector-ref>
-              <retry-interval>500</retry-interval>
-              <use-duplicate-detection>true</use-duplicate-detection>
-              <message-load-balancing>STRICT</message-load-balancing>
-              <max-hops>1</max-hops>
-              <static-connectors>
-                 <connector-ref>server1-connector</connector-ref>
-              </static-connectors>
-           </cluster-connection>
+            <cluster-connection name="broker-cluster">
+                <address>jms</address>
+                <connector-ref>netty-connector</connector-ref>
+                <static-connectors>
+                    <connector-ref>server1-connector</connector-ref>
+                </static-connectors>
+            </cluster-connection>
         </cluster-connections>
 
         <ha-policy>
